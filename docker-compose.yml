@@ -1,0 +1,29 @@
+# АРХИВ — запуск бота и юзербота двумя контейнерами с общей базой.
+#
+# 1. Скопируй .env.example в .env и заполни BOT_TOKEN (и API_ID/API_HASH для юзербота).
+# 2. Запусти:            docker compose up -d
+#    Только бот:         docker compose up -d bot
+#    Логи:               docker compose logs -f bot userbot
+
+services:
+  bot:
+    build: .
+    container_name: archive_bot
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - archive-data:/data
+
+  userbot:
+    build: .
+    container_name: archive_userbot
+    restart: unless-stopped
+    command: ["python", "userbot.py"]
+    env_file: .env
+    volumes:
+      - archive-data:/data
+    # Первый запуск просит телефон/код в консоли:
+    #   docker compose attach userbot   (или запусти без -d первый раз)
+
+volumes:
+  archive-data:

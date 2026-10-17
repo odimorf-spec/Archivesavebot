@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+*.session
+*.session-journal
+.env
+api.txt
+data.db
+data.db-journal
+data.db-wal
+data.db-shm
+media/
